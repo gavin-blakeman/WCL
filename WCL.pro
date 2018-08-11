@@ -35,7 +35,7 @@ TARGET = WCL
 TEMPLATE = lib
 CONFIG += staticlib
 
-QMAKE_CXXFLAGS += -std=c++14
+QMAKE_CXXFLAGS += -std=c++17
 
 win32:CONFIG(release, debug|release) {
   DESTDIR = "../Library/win32/release"
