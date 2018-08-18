@@ -1,4 +1,4 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library (WCL)
 // FILE:								database
@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017 Gavin Blakeman.
+//                      Copyright 2015, 2017-2018 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -34,28 +34,29 @@
 //
 //*********************************************************************************************************************************
 
-#include "../Include/database.h"
+#include "include/database.h"
 
 #include <QtSql>
 
 #include <GCL>
 #include <PCL>
 
-#include "../Include/error.h"
-#include "../Include/settings.h"
+#include "include/error.h"
+#include "include/settings.h"
 
 #include <string>
 #include <tuple>
 
-namespace VWL
+namespace WCL
 {
 
   CDatabase database;
-  GCL::sqlwriter::CMappedSQLWriter sqlWriter;
+  GCL::sqlwriter::CSQLWriter sqlWriter;
 
-  /// Checks if a record already exists.
+  /// @brief Checks if a record already exists.
   //
-  // 2015-06-03/GGB - Function created.
+  /// @version 2015-06-03/GGB - Function created.
+
   bool CDatabase::dailyRecordExists(unsigned long siteID, unsigned long instrumentID, ACL::TJD const &JD)
   {
     bool returnValue = false;
@@ -120,9 +121,9 @@ namespace VWL
                                        {"hiInHum", static_cast<double>(record1.hiInHum) / 10},
                                        {"lowInHum", static_cast<double>(record1.lowInHum) / 10},
                                        {"avgOutHum", static_cast<double>(record1.avgOutHum) / 10},
-                                       {"hiBar", PCL::CPressure::convert(static_cast<double>(record1.hiBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
-                                       {"lowBar", PCL::CPressure::convert(static_cast<double>(record1.lowBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
-                                       {"avgBar", PCL::CPressure::convert(static_cast<double>(record1.avgBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
+                                       {"hiBar", PCL::CPressure::convert(static_cast<double>(record1.hiBar)/1000, PCL::INHG, PCL::PA)},
+                                       {"lowBar", PCL::CPressure::convert(static_cast<double>(record1.lowBar)/1000, PCL::INHG, PCL::PA)},
+                                       {"avgBar", PCL::CPressure::convert(static_cast<double>(record1.avgBar)/1000, PCL::INHG, PCL::PA)},
                                        {"hiSpeed", PCL::CVelocity::convert(static_cast<double>(record1.hiSpeed) / 10, PCL::VU_MPH, PCL::VU_MPS) },
                                        {"avgSpeed", PCL::CVelocity::convert(static_cast<double>(record1.avgSpeed) / 10, PCL::VU_MPH, PCL::VU_MPS) },
                                        {"dailyRainTotal", PCL::CLength::convert(static_cast<double>(record1.dailyRainTotal) / 1000, PCL::LU_INCH, PCL::LU_METER) * 1000},

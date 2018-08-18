@@ -1,4 +1,4 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library (WCL)
 // FILE:								database
@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017 Gavin Blakeman.
+//                      Copyright 2015, 2017-2018 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,8 +42,8 @@
 
 #include <ACL>
 
-#include "../../WeatherLink/Include/WeatherLink.h"
-#include "../../WeatherLink/Include/WeatherLinkIP.h"
+#include "include/WeatherLink.h"
+#include "include/WeatherLinkIP.h"
 
 namespace WCL
 {
