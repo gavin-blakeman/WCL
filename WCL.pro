@@ -35,7 +35,7 @@ TARGET = WCL
 TEMPLATE = lib
 CONFIG += staticlib
 
-QMAKE_CXXFLAGS += -std=c++14
+QMAKE_CXXFLAGS += -std=c++17
 
 win32:CONFIG(release, debug|release) {
   DESTDIR = "../Library/win32/release"
@@ -57,10 +57,20 @@ else:unix:CONFIG(debug, debug|release) {
 INCLUDEPATH += \
   "../boost 1.62" \
   "../cfitsio" \
+  "../ACL" \
   "../GCL" \
-  "../PCL"  \
+  "../PCL"
 
 SOURCES += \
-    Source/WeatherLink.cpp \
+    source/WeatherLink.cpp \
+
+HEADERS += \
+    include/Ccitt.h \
+    include/database.h \
+    include/error.h \
+    include/GeneralFunctions.h \
+    include/settings.h \
+    include/WeatherLink.h \
+    include/WeatherLinkIP.h
 
 
