@@ -1,4 +1,4 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library (WCL)
 // FILE:								database
@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017 Gavin Blakeman.
+//                      Copyright 2015, 2017-2018 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -34,28 +34,29 @@
 //
 //*********************************************************************************************************************************
 
-#include "../Include/database.h"
+#include "include/database.h"
 
 #include <QtSql>
 
 #include <GCL>
 #include <PCL>
 
-#include "../Include/error.h"
-#include "../Include/settings.h"
+#include "include/error.h"
+#include "include/settings.h"
 
 #include <string>
 #include <tuple>
 
-namespace VWL
+namespace WCL
 {
 
   CDatabase database;
-  GCL::sqlwriter::CMappedSQLWriter sqlWriter;
+  GCL::sqlwriter::CSQLWriter sqlWriter;
 
-  /// Checks if a record already exists.
+  /// @brief Checks if a record already exists.
   //
-  // 2015-06-03/GGB - Function created.
+  /// @version 2015-06-03/GGB - Function created.
+
   bool CDatabase::dailyRecordExists(unsigned long siteID, unsigned long instrumentID, ACL::TJD const &JD)
   {
     bool returnValue = false;
@@ -120,13 +121,13 @@ namespace VWL
                                        {"hiInHum", static_cast<double>(record1.hiInHum) / 10},
                                        {"lowInHum", static_cast<double>(record1.lowInHum) / 10},
                                        {"avgOutHum", static_cast<double>(record1.avgOutHum) / 10},
-                                       {"hiBar", PCL::CPressure::convert(static_cast<double>(record1.hiBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
-                                       {"lowBar", PCL::CPressure::convert(static_cast<double>(record1.lowBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
-                                       {"avgBar", PCL::CPressure::convert(static_cast<double>(record1.avgBar)/1000, PCL::PU_INHG, PCL::PU_PA)},
+                                       {"hiBar", PCL::CPressure::convert(static_cast<double>(record1.hiBar)/1000, PCL::PU::INHG, PCL::PU::PA)},
+                                       {"lowBar", PCL::CPressure::convert(static_cast<double>(record1.lowBar)/1000, PCL::PU::INHG, PCL::PU::PA)},
+                                       {"avgBar", PCL::CPressure::convert(static_cast<double>(record1.avgBar)/1000, PCL::PU::INHG, PCL::PU::PA)},
                                        {"hiSpeed", PCL::CVelocity::convert(static_cast<double>(record1.hiSpeed) / 10, PCL::VU_MPH, PCL::VU_MPS) },
                                        {"avgSpeed", PCL::CVelocity::convert(static_cast<double>(record1.avgSpeed) / 10, PCL::VU_MPH, PCL::VU_MPS) },
-                                       {"dailyRainTotal", PCL::CLength::convert(static_cast<double>(record1.dailyRainTotal) / 1000, PCL::LU_INCH, PCL::LU_METER) * 1000},
-                                       {"hiRainRate", PCL::CLength::convert(static_cast<double>(record1.hiRainRate) / 1000, PCL::LU_INCH, PCL::LU_METER) * 1000},
+                                       {"dailyRainTotal", PCL::CDistance::convert(static_cast<double>(record1.dailyRainTotal) / 1000, PCL::DU::INCH, PCL::DU::METER) * 1000},
+                                       {"hiRainRate", PCL::CDistance::convert(static_cast<double>(record1.hiRainRate) / 1000, PCL::DU::INCH, PCL::DU::METER) * 1000},
                                        {"dailyUVDose", static_cast<unsigned int>(record1.dailyUVDose)},
                                        {"hiUV", static_cast<unsigned int>(record1.hiUV)},
                                        {"dailySolarEnergy", static_cast<unsigned int>(record2.dailySolarEnergy)},
@@ -171,7 +172,7 @@ namespace VWL
                                        {"hiOutsideTemp", PCL::CTemperature::convert(static_cast<double>(record.temperatureHighOutside)/10, PCL::TU_F, PCL::TU_K)},
                                        {"lowOutsideTemp", PCL::CTemperature::convert(static_cast<double>(record.temperatureLowOutside)/10, PCL::TU_F, PCL::TU_K)},
                                        {"insideTemp", PCL::CTemperature::convert(static_cast<double>(record.temperatureInside)/10, PCL::TU_F, PCL::TU_K)},
-                                       {"barometer", PCL::CPressure::convert(static_cast<double>(record.barometer)/1000, PCL::PU_INHG, PCL::PU_PA)},
+                                       {"barometer", PCL::CPressure::convert(static_cast<double>(record.barometer)/1000, PCL::PU::INHG, PCL::PU::PA)},
                                        {"outsideHumidity", static_cast<unsigned int>(record.humidityOutside)},
                                        {"insideHumidity", static_cast<unsigned int>(record.humidityInside)},
                                        {"rain", static_cast<double>(record.rainfall) * 0.2},
@@ -252,7 +253,7 @@ namespace VWL
                                        {"hiOutsideTemp", PCL::CTemperature::convert(static_cast<double>(record.hiOutsideTemp)/10, PCL::TU_F, PCL::TU_K)},
                                        {"lowOutsideTemp", PCL::CTemperature::convert(static_cast<double>(record.lowOutsideTemp)/10, PCL::TU_F, PCL::TU_K)},
                                        {"insideTemp", PCL::CTemperature::convert(static_cast<double>(record.insideTemp)/10, PCL::TU_F, PCL::TU_K)},
-                                       {"barometer", PCL::CPressure::convert(static_cast<double>(record.barometer)/1000, PCL::PU_INHG, PCL::PU_PA)},
+                                       {"barometer", PCL::CPressure::convert(static_cast<double>(record.barometer)/1000, PCL::PU::INHG, PCL::PU::PA)},
                                        {"outsideHumidity", static_cast<double>(record.outsideHum) / 10},
                                        {"insideHumidity", static_cast<double>(record.insideHum) / 10},
                                        {"rain", dRain},
@@ -279,7 +280,7 @@ namespace VWL
     return returnValue;
   }
 
-  /// Connects to the database.
+  /// @brief Connects to the database.
   //
   // 2015-04-01/GGB - Function created
 
