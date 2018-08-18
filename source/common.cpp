@@ -1,8 +1,8 @@
 ﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library
-// FILE:								error
-// SUBSYSTEM:						Error Messages
+// FILE:								common
+// SUBSYSTEM:						Common definitions
 // LANGUAGE:						C++
 // TARGET OS:						None.
 // LIBRARY DEPENDANCE:	None.
@@ -38,17 +38,43 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef WCL_ERROR_H
-#define WCL_ERROR_H
+#include "../include/common.h"
 
+  // Standard libraries
+
+#include <iomanip>
+#include <sstream>
 #include <string>
 
-namespace ACL
+  // GCL Library
+
+#include <GCL>
+
+  // Boost Library
+
+#include "boost/algorithm/string.hpp"
+
+namespace WCL
 {
 
-#define WCL_ERROR(ERR) (ERROR(WCL, ERR))
-#define WCL_CODE_ERROR CODE_ERROR(WCL)
+  unsigned int const WCL_MAJORVERSION = 2018;           ///< The Major version number (yyyy)
+  unsigned int const WCL_MINORVERSION = 9;              ///< The Minor version number (mm)
+  unsigned int const WCL_BUILDNUMBER  = 0x0000;         ///< The build number - incremented on each build.
 
-}   // namespace ACL
+  /// @brief Returns the library version and build number that was used for editing the library.
+  /// @returns A string with the application name, version, build.
+  /// @throws Nothing.
+  /// @version 2018-08-18/GGB - Function created.
 
-#endif // ACL_COMMON_H
+  std::string getVersionString()
+  {
+    std::stringstream s;
+
+    s << WCL_MAJORVERSION << "." << std::setfill('0') << std::setw(2) << WCL_MINORVERSION << std::setw(4) << std::hex << WCL_BUILDNUMBER << std::endl;
+
+    std::string returnValue = s.str();
+    boost::algorithm::to_upper(returnValue);
+
+    return returnValue;
+  }
+}

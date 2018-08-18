@@ -63,14 +63,20 @@ INCLUDEPATH += \
 
 SOURCES += \
     source/WeatherLink.cpp \
+    source/database.cpp \
+    source/GeneralFunctions.cpp \
+    source/settings.cpp \
+    source/common.cpp \
+    source/error.cpp
 
 HEADERS += \
     include/Ccitt.h \
     include/database.h \
-    include/error.h \
     include/GeneralFunctions.h \
     include/settings.h \
     include/WeatherLink.h \
-    include/WeatherLinkIP.h
+    include/WeatherLinkIP.h \
+    include/common.h \
+    include/error.h
 
 

@@ -72,7 +72,7 @@ namespace WCL
     virtual void connectToDatabase();
     virtual void disconnectFromDatabase();
 
-    bool dailyRecordExists(unsigned long siteID, unsigned long instrumentID, ACL::TJD const &);
+    bool dailyRecordExists(std::uint32_t siteID, std::uint32_t instrumentID, ACL::TJD const &);
     bool insertDailySummary(unsigned long siteID, unsigned long instrumentID, SDailySummary1 const &, SDailySummary2 const &, const ACL::TJD &JD);
     bool insertRecord(unsigned long siteID, unsigned long instrumentID, SArchiveRecord &);
     bool insertRecord(unsigned long siteID, unsigned long instrumentID, SWeatherDataRecord const &, ACL::TJD const &);

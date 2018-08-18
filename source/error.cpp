@@ -1,148 +1,90 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							Vantage Weather Library (VWL)
+// PROJECT:							Weather Class Library
 // FILE:								error
-// SUBSYSTEM:						Error System
+// SUBSYSTEM:						Error Message Definition
 // LANGUAGE:						C++
-// TARGET OS:						WINDOWS/UNIX/LINUX/MAC
-// LIBRARY DEPENDANCE:	QtSql, ACL
-// NAMESPACE:						weatherlink
-// AUTHOR:							Gavin Blakeman.
+// TARGET OS:						None.
+// LIBRARY DEPENDANCE:	None.
+// NAMESPACE:						WCL
+// AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015 Gavin Blakeman.
-//                      This file is part of the Vantage Weather library (VWL).
+//                      Copyright 2018 Gavin Blakeman.
+//                      This file is part of the Weather Class Library (WCL).
 //
-//                      VWL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      VWL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
 //                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 //                      for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with VWL.  If not, see
+//                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
 //                      <http://www.gnu.org/licenses/>.
 //
-// OVERVIEW:						Implments classes and structures for retrieving data from the .WLK weatherlink files.
 //
-// CLASSES INCLUDED:    CDatabase
+// OVERVIEW:						Common definitions that can be used by multiple files
 //
-// CLASS HIERARCHY:     CWeatherLinkDatabaseFile
 //
-// HISTORY:             2015-03-29 GGB - File Created
+// CLASSES INCLUDED:		None
+//
+// CLASS HIERARCHY:     None.
+//
+// FUNCTIONS INCLUDED:  std::string getVersionString()
+//
+// HISTORY:             2018-08-18 GGB - File created.
 //
 //*********************************************************************************************************************************
 
-#include "../Include/error.h"
+#include "../include/common.h"
 
-#include <QtCore>
+  // Standard libraries
 
-#include "boost/lexical_cast.hpp"
+#include <string>
+#include <vector>
 
-namespace VWL
+  // GCL Library
+
+#include <GCL>
+
+namespace WCL
 {
-  std::map<size_t, std::string> CError::errorMessages;
-
-  struct SErrorCodes
+  class CLoader
   {
-    size_t errorCode_;
-    std::string errorMessage;
+  private:
+    void loadErrorMessages();
+
+  public:
+    CLoader();
   };
 
-  SErrorCodes errorArray[] =
+  static CLoader loader();    // Calls the loadErrorMessageFunction on creation during startup.
+
+  CLoader::CLoader()
   {
-    {0x0001, std::string("APPLICATION: Unable to open data file.")},
-    {0x3002, std::string("DATABASE: Unknown rain guage size.")},
-  };
+    loadErrorMessages();
+  }
 
-  /// Returns a string indicating the error message.
-  //
-  // 2015-03-30/GGB - Function created.
+  /// @brief Adds the WCL library error codes into the GCL error object.
+  /// @throws None.
+  /// @version  2018-08-18/GGB - Function created.
 
-  std::string CError::errorMessage() const
+  void CLoader::loadErrorMessages()
   {
-    std::map <size_t, std::string> :: const_iterator errorData;
-
-    if ((errorData = errorMessages.find(errorCode_)) == errorMessages.end() )
+    std::vector<std::pair<GCL::TErrorCode, std::string>> errors =
     {
-        // Error message not found - Error code has not been defined.
-        // This is a non-recoverable error.
-
-      exit(0xFFFE);		// Non-recoverable error within an error
+      {0x0001, "APPLICATION: Unable to open data file."},
+      {0x0002, "DATABASE: Database Settings incorrect."},
+      {0x0005, "DATABSE: Unable to open OracleXE database."},
+      {0x0006, "DATABASE: Unable to Open MySQL database."},
+      {0x000A, "DATABASE: Unable to open SQLite database"},
+      {0x3002, "DATABASE: Unknown rain guage size."},
     };
 
-    return (errorData->second);
+    std::for_each(errors.begin(), errors.end(),
+                  [] (std::pair<GCL::TErrorCode, std::string> p) { GCL::CError::addErrorMessage("WCL", p.first, p.second); });
   }
 
-  // Static function to copy all the error messages from the array into the map.
-  // The error messages do not have to be in order or contiguous in the array.
-  //
-  // 2015-03-30/GGB - Function created.
-
-  void CError::loadErrorMessages()
-  {
-    size_t elements = sizeof(errorArray) / sizeof(SErrorCodes);   // Work out how many elements stored.
-    size_t index;
-
-    for (index = 0; index < elements; index++)
-      errorMessages[errorArray[index].errorCode_] = errorArray[index].errorMessage;
-  }
-
-  /// Function to log the error message to the fileLogger()
-  //
-  // 2015-03-30/GGB - Function created.
-
-  void CError::logErrorMessage() const
-  {
-    std::map<size_t, std::string>::const_iterator errorData;
-
-    if ((errorData = errorMessages.find(errorCode_)) == errorMessages.end() )
-    {
-        // Error message not found - Error code has not been defined.
-        // This is a non-recoverable error.
-
-      GCL::logger::defaultLogger().logMessage(GCL::logger::error,
-                                           "Non recoverable error within an error in GCL library. Error Code: " +
-                                           boost::lexical_cast<std::string>(errorCode_) + ". Terminating");
-      exit(0xFFFE);		// Non-recoverable error within an error
-    }
-    else
-      GCL::logger::defaultLogger().logMessage(GCL::logger::warning,
-                                           "GCL Error Code: " + boost::lexical_cast<std::string>(errorData->first) +
-                                           " - " + errorData->second);
-  }
-
-  //********************************************************************************************************************************
-  //
-  // CCodeError
-  //
-  //********************************************************************************************************************************
-
-  /// Displays the error message in a QMessageBox.
-  //
-  // 2015-03-30/GGB - Function created.
-
-  std::string CCodeError::errorMessage() const
-  {
-    std::ostringstream o;
-
-    o << "A code error has occurred in the GCL Library." << std::endl;
-    o << "File name: " << fileName << " dated: " << timeStamp << std::endl;
-    o << "Line number: " << lineNo << std::endl;
-
-    return o.str();
-  }
-
-  /// Function to log the error message to the fileLogger()
-  //
-  // 2015-03-30/GGB - Function created.
-
-  void CCodeError::logErrorMessage() const
-  {
-
-    //GCL::logger::defaultLogger().logMessage(GCL::logger::error, "A code error has occurred. Version: " + getReleaseString() +
-    //                                     ". File Name: " + fileName + ". Line Number: " + boost::lexical_cast<std::string>(lineNo));
-  }
-
-} // namespace VWL
+}

@@ -1,8 +1,8 @@
 ﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library
-// FILE:								error
-// SUBSYSTEM:						Error Messages
+// FILE:								common
+// SUBSYSTEM:						Common definitions
 // LANGUAGE:						C++
 // TARGET OS:						None.
 // LIBRARY DEPENDANCE:	None.
@@ -38,16 +38,17 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef WCL_ERROR_H
-#define WCL_ERROR_H
+#ifndef WCL_COMMON_H
+#define WCL_COMMON_H
 
 #include <string>
 
 namespace ACL
 {
 
-#define WCL_ERROR(ERR) (ERROR(WCL, ERR))
-#define WCL_CODE_ERROR CODE_ERROR(WCL)
+  std::string const WCL_LIBNAME       = "WCL";
+
+  std::string getVersionString();
 
 }   // namespace ACL
 
