@@ -1,4 +1,4 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library
 // FILE:								WeatherLink
@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2017 Gavin Blakeman.
+//                      Copyright 2011-2018 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL)
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -33,17 +33,17 @@
 //
 //*********************************************************************************************************************************
 
-#include "../Include/WeatherLink.h"
+#include "../include/WeatherLink.h"
 
 namespace WCL
 {
   char idCode[] = {'W', 'D', 'A', 'T', '5', '.', '3', 0, 0, 0, 0, 0, 0, 0, 5, 3};
 
-	//********************************************************************************************************************************
-	//
-	// CWeatherLinkDatabaseFile
-	//
-	//********************************************************************************************************************************
+  //********************************************************************************************************************************
+  //
+  // CWeatherLinkDatabaseFile
+  //
+  //********************************************************************************************************************************
 
   /// @brief Class constructor.
   /// @param[in] szFileName - Name of the file to open.
@@ -51,9 +51,9 @@ namespace WCL
   /// @version 2011-07-26/GGB - Function created.
 
   CWeatherLinkDatabaseFile::CWeatherLinkDatabaseFile(const boost::filesystem::path &szFileName) :
-    wlf(szFileName.c_str(), std::ifstream::in | std::ifstream::binary), bFileOpen(false), 
+    wlf(szFileName.c_str(), std::ifstream::in | std::ifstream::binary), bFileOpen(false),
     bDayRecordValid(false), bArchiveRecordValid(false), archiveIndex(0)
-	{
+  {
   }
 
   /// Class destructor. Ensures that all dynamic memory is released. Also ensures all files are closed.
@@ -78,7 +78,7 @@ namespace WCL
       bDayRecordValid = false;
       bArchiveRecordValid = false;
     };
-    
+
     return true;
   }
 
@@ -148,8 +148,8 @@ namespace WCL
   //
   // 2011-07-31/GGB - Function created.
 
-  long CWeatherLinkDatabaseFile::getRecordCount() const 
-  { 
+  long CWeatherLinkDatabaseFile::getRecordCount() const
+  {
     if (bFileOpen)
     {
       return headerBlock.totalRecords;
@@ -159,7 +159,7 @@ namespace WCL
       return -1;
     }
   }
-    
+
   /// Moves the file to the next archive record for the day and loads the archive record
   //
   // 2011-07-31/GGB - Function created.
@@ -174,9 +174,9 @@ namespace WCL
     else
     {
       archiveIndex++;
-      wlf.seekg(sizeof(SHeaderBlock) + (sizeof(SDailySummary1) * (headerBlock.dayIndex[dayIndex].startPos + 2)) 
+      wlf.seekg(sizeof(SHeaderBlock) + (sizeof(SDailySummary1) * (headerBlock.dayIndex[dayIndex].startPos + 2))
         + (sizeof(SWeatherDataRecord) * archiveIndex));
-      
+
       wlf.read(reinterpret_cast<char *>(&archiveRecord), sizeof(SWeatherDataRecord));
 
       if (wlf.gcount() != sizeof(SWeatherDataRecord))
@@ -186,7 +186,7 @@ namespace WCL
       }
       else if (archiveRecord.dataType == 1)
       {
-        bArchiveRecordValid = true;    
+        bArchiveRecordValid = true;
         return true;
       }
       else
@@ -197,7 +197,7 @@ namespace WCL
     };
   }
 
-  // Moves the current day record to the next day record. 
+  // Moves the current day record to the next day record.
   // This also loads the daily summaries and invalidates the archive records.
   //
   //
@@ -216,7 +216,7 @@ namespace WCL
     else
     {
       while ( (dayIndex <= 30) && (!bDataValid) )
-      { 
+      {
           // Search for the next valid day record.
 
         dayIndex++;
@@ -239,7 +239,7 @@ namespace WCL
           bDayRecordValid = true;
           bArchiveRecordValid = false;
           archiveIndex = -1;
-        
+
           return true;
         }
         else
@@ -247,7 +247,7 @@ namespace WCL
           bDayRecordValid = false;
           bArchiveRecordValid = false;
           archiveIndex = -1;
-  
+
           return false;
         };
       }
@@ -304,7 +304,7 @@ namespace WCL
           bArchiveRecordValid = false;
           return true;
         };
-      
+
       };
     };
   }
