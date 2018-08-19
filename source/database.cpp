@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 ﻿//*********************************************************************************************************************************
 //
 // PROJECT:							Weather Class Library (WCL)
@@ -38,7 +36,7 @@
 
 #include "include/database.h"
 
-// WCL header files
+  // WCL header files
 
 #include "include/error.h"
 #include "include/settings.h"
@@ -52,11 +50,6 @@
 
 #include <GCL>
 #include <PCL>
-#include <QtSql>
-
-
-
-
 
 namespace WCL
 {
@@ -522,5 +515,4 @@ namespace WCL
     }
 
 
-} // namespace VWL
->>>>>>> Stashed changes
+} // namespace WCL

@@ -37,13 +37,18 @@
 #ifndef WCL_DATABASE_H
 #define WCL_DATABASE_H
 
-#include <Qt>
-#include <QSqlDatabase>
-
-#include <ACL>
+  // WCL header files
 
 #include "include/WeatherLink.h"
 #include "include/WeatherLinkIP.h"
+
+  // Library header files.
+
+#include <Qt>
+#include <QSqlDatabase>
+#include <QtSql>
+
+#include <ACL>
 
 namespace WCL
 {
