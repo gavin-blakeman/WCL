@@ -43,9 +43,10 @@ namespace WCL
 
     QSettings settings(ORG_NAME, APPL_NAME);
 
-    /// Function to create default settings for ARID if there are no settings defined when the application starts.
-    //
-    // 2015-05-17/GGB - Function created.
+    /// @brief Function to create default settings for the weather database if there are no settings defined when the application
+    ///        starts.
+    /// @throws None.
+    /// @version 2015-05-17/GGB - Function created.
 
     void createDefaultSettings()
     {
