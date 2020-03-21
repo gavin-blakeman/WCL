@@ -1,6 +1,6 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
-// PROJECT:							Vantage Weather Library (VWL)
+// PROJECT:							Weather Class Library (WCL)
 // FILE:								GeneralFunctions
 // SUBSYSTEM:						General functions for the library
 // LANGUAGE:						C++
@@ -10,41 +10,39 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015 Gavin Blakeman.
-//                      This file is part of the Vantage Weather library (VWL).
+//                      Copyright 2015, 2020 Gavin Blakeman.
+//                      This file is part of the Weather Class Library (WCL).
 //
-//                      VWL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      VWL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
 //                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 //                      for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with VWL.  If not, see
+//                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
 //                      <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:						Implments classes and structures for retrieving data from the .WLK weatherlink files.
-//
-// CLASSES INCLUDED:    CDatabase
-//
-// CLASS HIERARCHY:     CWeatherLinkDatabaseFile
 //
 // HISTORY:             2015-03-29 GGB - File Created
 //
 //*********************************************************************************************************************************
 
-#ifndef VWL_GENERALFUNCTIONS_H
+#ifndef WCL_GENERALFUNCTIONS_H
 #define VWL_GENERALFUNCTIONS_H
+
+  // Standard C++ library header files
 
 #include <cstddef>
 #include <cstdint>
 
-namespace VWL
+namespace WCL
 {
 
-  uint16_t calculateCRC(uint8_t *, size_t startIndex, size_t byteCount);
+  std::uint16_t calculateCRC(std::uint8_t *, std::size_t startIndex, std::size_t byteCount);
 
-}   // namespace VWL
+}   // namespace WCL
 
 #endif // VWL_GENERALFUNCTIONS_H

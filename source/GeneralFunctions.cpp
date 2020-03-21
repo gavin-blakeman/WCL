@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							Vantage Weather Library (VWL)
+// PROJECT:							Weather Class Library (WCL)
 // FILE:								GeneralFunctions
 // SUBSYSTEM:						General functions for the library
 // LANGUAGE:						C++
@@ -11,17 +11,17 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2015, 2018 Gavin Blakeman.
-//                      This file is part of the Vantage Weather library (VWL).
+//                      This file is part of the Weather Class Library (WCL).
 //
-//                      VWL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      VWL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
 //                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 //                      for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with VWL.  If not, see
+//                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
 //                      <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:						Implments classes and structures for retrieving data from the .WLK weatherlink files.
@@ -38,24 +38,26 @@
 
 #include "include/Ccitt.h"
 
-namespace VWL
+namespace WCL
 {
-  /// Calculates the CRC for adding an additional byte.
-  //
-  // 2015-05-18/GGB - Function created.
+  /// @brief Calculates the CRC for adding an additional byte.
+  /// @param[in] data:
+  /// @param[in] startIndex:
+  /// @param[in] byteCount:
+  /// @version 2015-05-18/GGB - Function created.
 
-  uint16_t calculateCRC(uint8_t *data, size_t startIndex, size_t byteCount)
+  uint16_t calculateCRC(std::uint8_t *data, std::size_t startIndex, std::size_t byteCount)
   {
-    size_t index;
-    size_t extent = startIndex + byteCount;
-    uint16_t CRC = 0;
+    std::size_t index;
+    std::size_t extent = startIndex + byteCount;
+    std::uint16_t CRC = 0;
 
     for (index = startIndex; index < extent; index++)
     {
-      CRC  =crc_table[(CRC >> 8) ^ data[index]] ^ (CRC << 8);
+      CRC  = crc_table[(CRC >> 8) ^ data[index]] ^ (CRC << 8);
     };
 
     return CRC;
   }
 
-} // namespace WEATHERLINK
+} // namespace WCL

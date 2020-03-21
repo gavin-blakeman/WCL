@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							Vantage Weather Library (VWL)
+// PROJECT:							Weather Class Library
 // FILE:								settings
 // SUBSYSTEM:						Settings
 // LANGUAGE:						C++
@@ -10,18 +10,17 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2018 Gavin Blakeman.
-//                      This file is part of the Vantage Weather library (VWL).
+//                      Copyright 2015, 2018, 2020 Gavin Blakeman.
+//                      This file is part of the Weather Class Library (WCL).
 //
-//                      VWL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      VWL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
 //                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 //                      for more details.
-//
-//                      You should have received a copy of the GNU General Public License along with VWL.  If not, see
+//                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
 //                      <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:						Implments classes and structures for retrieving data from the .WLK weatherlink files.
@@ -34,8 +33,8 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef VWL_SETTINGS_H
-#define VWL_SETTINGS_H
+#ifndef WCL_SETTINGS_H
+#define WCL_SETTINGS_H
 
 #include <Qt>
 #include <QSettings>
@@ -47,7 +46,7 @@ namespace WCL
     QString const FILENAME                                  ("/etc/WSd/WSd.conf");
 
     QString const ORG_NAME                                  ("GPLv2");
-    QString const APPL_NAME                                 ("VWL");
+    QString const APPL_NAME                                 ("WCL");
 
       // WSd device related information
 
@@ -86,4 +85,4 @@ namespace WCL
 
 }
 
-#endif // SETTINGS_H
+#endif // WCL_SETTINGS_H
