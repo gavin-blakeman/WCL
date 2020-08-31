@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017-2018 Gavin Blakeman.
+//                      Copyright 2015, 2017-2018, 2020 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -55,7 +55,7 @@ namespace WCL
 {
 
   CDatabase database;
-  GCL::sqlwriter::CSQLWriter sqlWriter;
+  GCL::sqlWriter sqlWriter;
 
   /// @brief Checks if a record already exists.
   /// @param[in] siteID: The ID of the site to associate with the weather record.
@@ -72,9 +72,9 @@ namespace WCL
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_DAYSUMMARY.MJD"}).from({"TBL_DAYSUMMARY"}).
                             where({
-                                    GCL::sqlwriter::parameterTriple(std::string("MJD"), std::string("="), JD.MJD()),
-                                    GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID),
-                                    GCL::sqlwriter::parameterTriple(std::string("INSTRUMENT_ID"), std::string("="), instrumentID),
+                                    GCL::sqlWriter::parameterTriple(std::string("MJD"), std::string("="), JD.MJD()),
+                                    GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID),
+                                    GCL::sqlWriter::parameterTriple(std::string("INSTRUMENT_ID"), std::string("="), instrumentID),
                                     }).string();
 
     if ( query.exec(QString::fromStdString(sqlString)) )
@@ -317,9 +317,9 @@ namespace WCL
     TRACEEXIT;
   }
 
-  /// Gets the time of the last weather record.
+  /// @brief Gets the time of the last weather record.
   //
-  // 2015-05-18/GGB - Function created.
+  /// @version 2015-05-18/GGB - Function created.
 
   bool CDatabase::lastWeatherRecord(unsigned long siteID, unsigned long instrumentID, uint16_t &MJD, uint16_t &time)
   {
@@ -329,8 +329,8 @@ namespace WCL
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_ARCHIVE.MJD", "TBL_ARCHIVE.TIME"}).from({"TBL_ARCHIVE"}).
                             orderBy({
-                                      {"MJD", "DESC"},
-                                      {"TIME", "DESC"}
+                                      {"MJD", GCL::sqlWriter::DESC},
+                                      {"TIME", GCL::sqlWriter::DESC}
                                     }).string();
 
     if ( query.exec(QString::fromStdString(sqlString)) )
@@ -430,9 +430,9 @@ namespace WCL
     };
   }
 
-  // Function for connecting to a MySQL database.
-  // Reads the information from the settings and then creates the database connection.
-  // An exception is thrown if the connection cannot be created.
+  /// @brief Function for connecting to a MySQL database. Reads the information from the settings and then creates the database
+  ///        connection.
+  /// @exceptions An exception is thrown if the connection cannot be created.
   //
   // 2015-04-01/GGB - Function Created
 
@@ -477,10 +477,10 @@ namespace WCL
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_ARCHIVE.MJD", "TBL_ARCHIVE.TIME"}).from({"TBL_ARCHIVE"}).
                             where({
-                                    GCL::sqlwriter::parameterTriple(std::string("MJD"), std::string("="), JD.MJD()),
-                                    GCL::sqlwriter::parameterTriple(std::string("TIME"), std::string("="), static_cast<unsigned int>(time)),
-                                    GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID),
-                                    GCL::sqlwriter::parameterTriple(std::string("INSTRUMENT_ID"), std::string("="), instrumentID),
+                                    GCL::sqlWriter::parameterTriple(std::string("MJD"), std::string("="), JD.MJD()),
+                                    GCL::sqlWriter::parameterTriple(std::string("TIME"), std::string("="), static_cast<unsigned int>(time)),
+                                    GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID),
+                                    GCL::sqlWriter::parameterTriple(std::string("INSTRUMENT_ID"), std::string("="), instrumentID),
                                     }).string();
 
     if ( query.exec(QString::fromStdString(sqlString)) )

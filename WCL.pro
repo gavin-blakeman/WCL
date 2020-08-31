@@ -65,7 +65,7 @@ INCLUDEPATH += \
   "../NOVAS/novasc3.1" \
   "../PCL" \
   "../SCL" \
-  "../Libraw"
+  "../LibRaw"
 
 SOURCES += \
     source/WeatherLink.cpp \
