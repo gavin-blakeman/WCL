@@ -36,15 +36,15 @@
 
 #include "include/database.h"
 
-  // WCL header files
-
-#include "include/error.h"
-#include "include/settings.h"
-
   // Standard C++ library header files.
 
 #include <string>
 #include <tuple>
+
+  // WCL header files
+
+#include "include/error.h"
+#include "include/settings.h"
 
   // Miscellaneous library header files.
 
