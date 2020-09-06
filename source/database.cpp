@@ -240,7 +240,7 @@ namespace WCL
         dRain = 0.1;
         break;
       default:
-        CODE_ERROR(WCL);
+        CODE_ERROR;
         break;
       };
 
