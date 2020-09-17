@@ -45,7 +45,7 @@
 namespace ACL
 {
 
-  std::string const WCL_LIBNAME       = "WCL";
+  std::string const LIBRARYNAME       = "WCL";
 
   std::string getVersionString();
 

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017-2018 Gavin Blakeman.
+//                      Copyright 2015, 2017-2020 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -37,18 +37,20 @@
 #ifndef WCL_DATABASE_H
 #define WCL_DATABASE_H
 
-  // WCL header files
-
-#include "include/WeatherLink.h"
-#include "include/WeatherLinkIP.h"
-
   // Library header files.
 
 #include <Qt>
 #include <QSqlDatabase>
 #include <QtSql>
 
+  // Miscellanous library header files.
+
 #include <ACL>
+
+// WCL header files
+
+#include "include/WeatherLink.h"
+#include "include/WeatherLinkIP.h"
 
 namespace WCL
 {

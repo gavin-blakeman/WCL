@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2018 Gavin Blakeman.
+//                      Copyright 2015, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL).
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,11 +40,11 @@
 
 namespace WCL
 {
-  /// @brief Calculates the CRC for adding an additional byte.
-  /// @param[in] data:
-  /// @param[in] startIndex:
-  /// @param[in] byteCount:
-  /// @version 2015-05-18/GGB - Function created.
+  /// @brief      Calculates the CRC for adding an additional byte.
+  /// @param[in]  data:
+  /// @param[in]  startIndex:
+  /// @param[in]  byteCount:
+  /// @version  2015-05-18/GGB - Function created.
 
   uint16_t calculateCRC(std::uint8_t *data, std::size_t startIndex, std::size_t byteCount)
   {

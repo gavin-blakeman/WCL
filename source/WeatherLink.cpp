@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Weather Class Library (WCL)
 //
 //                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -33,7 +33,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/WeatherLink.h"
+#include "include/WeatherLink.h"
 
 namespace WCL
 {
