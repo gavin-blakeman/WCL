@@ -43,7 +43,7 @@ namespace WCL
 {
   namespace settings
   {
-    QString const FILENAME                                  ("/etc/WSd/WSd.conf");
+    QString const FILENAME                                  ("/home/gavin/WSd.conf");
 
     QString const ORG_NAME                                  ("GPLv2");
     QString const APPL_NAME                                 ("WCL");

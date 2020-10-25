@@ -32,12 +32,12 @@
 
 TARGET = WCL
 TEMPLATE = lib
-CONFIG += staticlib
+CONFIG += staticlib create_prl
 
 QT -= gui
 QT += sql
 
-QMAKE_CXXFLAGS += -std=c++17
+QMAKE_CXXFLAGS += -std=c++17 -static -static-libgcc
 
 win32:CONFIG(release, debug|release) {
   DESTDIR = "../Library/win32/release"
@@ -57,7 +57,7 @@ else:unix:CONFIG(debug, debug|release) {
 }
 
 INCLUDEPATH += \
-  "../boost 1.62" \
+  "/home/gavin/Documents/Projects/software/Library/Boost/boost_1_71_0" \
   "../cfitsio" \
   "../ACL" \
   "../GCL" \
@@ -76,6 +76,7 @@ SOURCES += \
     source/error.cpp
 
 HEADERS += \
+    WCL \
     include/Ccitt.h \
     include/database.h \
     include/GeneralFunctions.h \
@@ -84,5 +85,8 @@ HEADERS += \
     include/WeatherLinkIP.h \
     include/common.h \
     include/error.h
+
+LIBS += -L../GCL -lGCL
+LIBS += -L../PCL -lPCL
 
 

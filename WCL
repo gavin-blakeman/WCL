@@ -1,0 +1,43 @@
+﻿//*********************************************************************************************************************************
+//
+// PROJECT:							Weather Class Library (WCL)
+// FILE:								WCL
+// SUBSYSTEM:						Master include file
+// LANGUAGE:						C++
+// TARGET OS:						WINDOWS/UNIX/LINUX/MAC
+// LIBRARY DEPENDANCE:	QtSql, ACL, PCL
+// NAMESPACE:						weatherlink
+// AUTHOR:							Gavin Blakeman.
+// LICENSE:             GPLv2
+//
+//                      Copyright 2020 Gavin Blakeman.
+//                      This file is part of the Weather Class Library (WCL).
+//
+//                      WCL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
+//
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+//                      for more details.
+//
+//                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
+//                      <http://www.gnu.org/licenses/>.
+//
+// OVERVIEW:						Includes all the WCL library header files
+//
+// HISTORY:             2020-10-25 GGB - File Created
+//
+//*********************************************************************************************************************************
+
+#ifndef WCL_H
+#define WCL_H
+
+#include "include/common.h"
+#include "include/GeneralFunctions.h"
+#include "include/settings.h"
+#include "include/database.h"
+#include "include/WeatherLink.h"
+#include "include/WeatherLinkIP.h"
+
+#endif // WCL_H

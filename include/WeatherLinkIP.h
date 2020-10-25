@@ -17,7 +17,8 @@
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      WCLimplied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+//                      WCL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 //                      for more details.
 //
 //                      You should have received a copy of the GNU General Public License along with WCL.  If not, see
@@ -42,7 +43,7 @@
 
 namespace WCL
 {
-#define WL_MTU 1500
+  std::uint64_t const WL_MTU = 1500;
 
   std::uint8_t const commandReadLinkMemory[] = {'R', 'R', 'D'};
   std::uint8_t const commandReadArchiveMemory[] = {'S', 'R', 'D'};
@@ -51,7 +52,7 @@ namespace WCL
   std::uint8_t const commandDMPAFT[] = {'D', 'M', 'P', 'A', 'F', 'T'};
   std::uint8_t const commandCLRLOG[] = {'C', 'L', 'R', 'L', 'O', 'G'};
   std::uint8_t const commandSETTIME[] = {'S', 'E', 'T', 'T', 'I', 'M', 'E'};
-
+  std::uint8_t const commandSETPER[] = {'S', 'E', 'T', 'P', 'E', 'R'};
 
   std::uint8_t const wlACK = 0x06;
   std::uint8_t const wlNACK = 0x21;

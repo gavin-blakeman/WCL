@@ -41,41 +41,39 @@
 #include <string>
 #include <tuple>
 
-  // WCL header files
-
-#include "include/error.h"
-#include "include/settings.h"
-
   // Miscellaneous library header files.
 
 #include <GCL>
 #include <PCL>
 
+  // WCL header files
+
+#include "include/error.h"
+#include "include/settings.h"
+
 namespace WCL
 {
 
   CDatabase database;
-  GCL::sqlWriter sqlWriter;
 
-  /// @brief Checks if a record already exists.
-  /// @param[in] siteID: The ID of the site to associate with the weather record.
-  /// @param[in] instrumentID: The ID of the instrument with the weather record.
-  /// @param[in] JD: The date of the record to search.
-  /// @returns true - If a record exists for the day.
-  /// @version 2015-06-03/GGB - Function created.
+  /// @brief      Checks if a record already exists.
+  /// @param[in]  siteID: The ID of the site to associate with the weather record.
+  /// @param[in]  instrumentID: The ID of the instrument with the weather record.
+  /// @param[in]  JD: The date of the record to search.
+  /// @returns    true - If a record exists for the day.
+  /// @version    2015-06-03/GGB - Function created.
 
   bool CDatabase::dailyRecordExists(std::uint32_t siteID, std::uint32_t instrumentID, ACL::TJD const &JD)
   {
     bool returnValue = false;
     QSqlQuery query(database_);
+    GCL::sqlWriter sqlWriter;
 
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_DAYSUMMARY.MJD"}).from({"TBL_DAYSUMMARY"}).
-                            where({
-                                    GCL::sqlWriter::parameterTriple(std::string("MJD"), std::string("="), JD.MJD()),
-                                    GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID),
-                                    GCL::sqlWriter::parameterTriple(std::string("INSTRUMENT_ID"), std::string("="), instrumentID),
-                                    }).string();
+                            where({ {"MJD", "=", JD.MJD()},
+                                    {"SITE_ID", "=", siteID},
+                                    {"INSTRUMENT_ID", "=", instrumentID} }).string();
 
     if ( query.exec(QString::fromStdString(sqlString)) )
     {
@@ -89,9 +87,9 @@ namespace WCL
     return returnValue;
   }
 
-  /// Disconnects from the database.
+  /// @brief    Disconnects from the database.
   //
-  // 2015-06-01/GGB - Function created.
+  /// @version  2015-06-01/GGB - Function created.
 
   void CDatabase::disconnectFromDatabase()
   {
@@ -102,6 +100,7 @@ namespace WCL
     QSqlError error;
     bool returnValue = false;
     QSqlQuery query(database_);
+    GCL::sqlWriter sqlWriter;
 
     if (!dailyRecordExists(siteID, instrumentID, JD))
     {
@@ -165,6 +164,7 @@ namespace WCL
     bool returnValue = false;
     QSqlQuery query(database_);
     ACL::TJD JD(record.date.year + 2000, record.date.month, record.date.day);
+    GCL::sqlWriter sqlWriter;
 
     if (record.time < 2500 && !recordExists(siteID, instrumentID, JD, record.time))
     {
@@ -213,6 +213,7 @@ namespace WCL
     QSqlQuery query(database_);
     double dRain, dRate;
     unsigned int modifiedTime, time = record.packedTime;
+    GCL::sqlWriter sqlWriter;
 
       // Calculate the correct time value
 
@@ -287,9 +288,9 @@ namespace WCL
     return returnValue;
   }
 
-  /// @brief Connects to the database.
+  /// @brief      Connects to the database.
   //
-  // 2015-04-01/GGB - Function created
+  /// @version    2015-04-01/GGB - Function created
 
   void CDatabase::connectToDatabase()
   {
@@ -302,13 +303,21 @@ namespace WCL
     szDatabase.toUpper();
 
     if (szDatabase == "ORACLE XE")
+    {
       OracleXE();
+    }
     else if (szDatabase == "ODBC")
+    {
       ODBC();
+    }
     else if (szDatabase == "MYSQL")
+    {
       MySQL();
+    }
     else if (szDatabase == "SQLITE")
+    {
       SQLite();
+    }
     else
     {
       DEBUGMESSAGE("Database type is not known.");
@@ -325,6 +334,7 @@ namespace WCL
   {
     bool returnValue = false;
     QSqlQuery query(database_);
+    GCL::sqlWriter sqlWriter;
 
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_ARCHIVE.MJD", "TBL_ARCHIVE.TIME"}).from({"TBL_ARCHIVE"}).
@@ -430,11 +440,10 @@ namespace WCL
     };
   }
 
-  /// @brief Function for connecting to a MySQL database. Reads the information from the settings and then creates the database
-  ///        connection.
-  /// @exceptions An exception is thrown if the connection cannot be created.
-  //
-  // 2015-04-01/GGB - Function Created
+  /// @brief  Function for connecting to a MySQL database. Reads the information from the settings and then creates the database
+  ///         connection.
+  /// @throws An exception is thrown if the connection cannot be created.
+  /// @version 2015-04-01/GGB - Function Created
 
   void CDatabase::MySQL()
   {
@@ -449,7 +458,7 @@ namespace WCL
     {
       szConnectionName = QString("WEATHER");
       database_ = QSqlDatabase::addDatabase(driverName.toString(), szConnectionName);
-      database_.setHostName(settings::settings.value(settings::WEATHER_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString());
+      database_.setHostName(settings::settings.value(settings::WEATHER_MYSQL_HOSTADDRESS, QVariant(QString("server.theblakemans.id.au"))).toString());
       database_.setDatabaseName(settings::settings.value(settings::WEATHER_MYSQL_DATABASENAME, QVariant(QString("WEATHER"))).toString());
       database_.setUserName(settings::settings.value(settings::WEATHER_MYSQL_USERNAME, QVariant(QString("WEATHER"))).toString());
       database_.setPassword(settings::settings.value(settings::WEATHER_MYSQL_PASSWORD, QVariant(QString("WEATHER"))).toString());
@@ -473,6 +482,7 @@ namespace WCL
   {
     bool returnValue = false;
     QSqlQuery query(database_);
+    GCL::sqlWriter sqlWriter;
 
     sqlWriter.resetQuery();
     std::string sqlString = sqlWriter.select({"TBL_ARCHIVE.MJD", "TBL_ARCHIVE.TIME"}).from({"TBL_ARCHIVE"}).
@@ -495,14 +505,13 @@ namespace WCL
     return returnValue;
   }
 
-  void CDatabase::openDatabase()
+  /// @brief    Attempts to open the database.
+  /// @returns  The success of failure of opening the database.
+  /// @version  2020-10-25/GGB - Modified to return a value.
+
+  bool CDatabase::openDatabase()
   {
-    if ( !database_.open() )
-    {
-      DEBUGMESSAGE("Unable to open database.");
-      QSqlError error = database_.lastError();
-      WCL_ERROR(0x0006);
-    };
+    return database_.open();
   }
 
 

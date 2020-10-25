@@ -37,17 +37,17 @@
 #ifndef WCL_DATABASE_H
 #define WCL_DATABASE_H
 
-  // Library header files.
+  // Standard C++ Library header files.
 
-#include <Qt>
-#include <QSqlDatabase>
-#include <QtSql>
 
   // Miscellanous library header files.
 
 #include <ACL>
+#include <Qt>
+#include <QSqlDatabase>
+#include <QtSql>
 
-// WCL header files
+  // WCL header files
 
 #include "include/WeatherLink.h"
 #include "include/WeatherLinkIP.h"
@@ -85,7 +85,7 @@ namespace WCL
     bool insertRecord(unsigned long siteID, unsigned long instrumentID, SWeatherDataRecord const &, ACL::TJD const &);
     bool lastWeatherRecord(unsigned long siteID, unsigned long instrumentID, uint16_t &, uint16_t &);
     bool recordExists(unsigned long siteID, unsigned long instrumentID, ACL::TJD , uint16_t);
-    void openDatabase();
+    bool openDatabase();
     void closeDatabase();
   };
 

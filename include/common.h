@@ -42,13 +42,13 @@
 
 #include <string>
 
-namespace ACL
+namespace WCL
 {
 
   std::string const LIBRARYNAME       = "WCL";
 
   std::string getVersionString();
 
-}   // namespace ACL
+}   // namespace WCL
 
 #endif // ACL_COMMON_H
